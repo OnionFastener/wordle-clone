@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function handleSubmitWord() {
-        const currentWordArr = getCurrentWordArr();
+        const currentWordArr = getCurrentWordArr(availableSpace-1);
         if (currentWordArr.length !== 5) {
             window.alert("word must be 5 letters");
         }
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const currentWord = currentWordArr.join("");
 
         if (wordList.includes(currentWord)){
-            const firstLetterId = guessedWordCount * 5 + 1;
+            const firstLetterId = availableSpace - 5;
             const interval = 200;
             currentWordArr.forEach((letter, index) => {
                 setTimeout(() => {
@@ -74,13 +74,13 @@ document.addEventListener("DOMContentLoaded", () => {
         
     }
 
-    function getCurrentWordArr() {
-        const numberOfGuessedWords = guessedWords.length;
-        return guessedWords[numberOfGuessedWords - 1];
+    function getCurrentWordArr(position) {
+        //const numberOfGuessedWords = guessedWords.length;
+        return guessedWords[Math.floor((position-1)/5)];
     }
 
     function updateGuessedWords(letter){
-        const currentWordArr = getCurrentWordArr();
+        const currentWordArr = getCurrentWordArr(availableSpace);
 
         if (currentWordArr && currentWordArr.length < 5){
             currentWordArr.push(letter);
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function handleDeleteLetter() {
-        const currentWordArr = getCurrentWordArr()
+        const currentWordArr = getCurrentWordArr(availableSpace-1)
         const removedLetter = currentWordArr.pop()
 
         guessedWords[guessedWords.length - 1] = currentWordArr
@@ -113,6 +113,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const lastLetterEl = document.getElementById(String(availableSpace - 1))
 
         lastLetterEl.textContent = ''
+        lastLetterEl.style = `background-color:black`;
+
         availableSpace = availableSpace - 1
     }
 
