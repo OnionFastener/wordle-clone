@@ -105,6 +105,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function handleDeleteLetter() {
+        if ((availableSpace - 1) % 5 == 0) {
+            return;
+        }
+        
         const currentWordArr = getCurrentWordArr(availableSpace-1)
         const removedLetter = currentWordArr.pop()
 
